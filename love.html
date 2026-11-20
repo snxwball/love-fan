@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ข้อความพิเศษถึงคนสำคัญ 💌</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Mali, Itim, Prompt สำหรับภาษาไทยที่น่ารักละมุน -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Mali:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome สำหรับไอคอน -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ตั้งค่าฟอนต์หลักและการป้องกันการเลื่อนหน้าจอ */
+        body {
+            font-family: 'Mali', 'Prompt', sans-serif;
+            overflow: hidden;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .font-itim {
+            font-family: 'Itim', cursive, sans-serif;
+        }
+
+        /* พื้นหลังไล่เฉดสีโรแมนติกเปลี่ยนตามฉาก */
+        .bg-romantic-night {
+            background: radial-gradient(circle at 50% 30%, #2d1b4e 0%, #1a0f2e 60%, #0d0718 100%);
+            transition: background 1.5s ease-in-out;
+        }
+
+        .bg-romantic-pastel {
+            background: linear-gradient(135deg, #ffe4e6 0%, #fecdd3 35%, #fbcfe8 70%, #f5d0fe 100%);
+            transition: background 1.5s ease-in-out;
+        }
+
+        /* อนิเมชันหัวใจเต้นตึกตัก */
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.18); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.12); }
+            60% { transform: scale(1); }
+        }
+        .animate-heartbeat {
+            animation: heartbeat 1.8s infinite ease-in-out;
+        }
+
+        /* อนิเมชันลอยตัวนุ่มนวล */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+        }
+        .animate-float {
+            animation: floatSlow 4s infinite ease-in-out;
+        }
+
+        /* อนิเมชันเคอร์เซอร์พิมพ์ดีด */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 0.8s infinite;
+            color: #fb7185;
+            margin-left: 2px;
+        }
+
+        /* เอฟเฟกต์กระจกฝ้า (Glassmorphism) */
+        .glass-card-dark {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .glass-card-light {
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 20px 45px rgba(244, 63, 94, 0.18);
+        }
+
+        /* การเปลี่ยนฉากแบบ Fade & Scale */
+        .scene {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.95) translateY(15px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 10;
+        }
+
+        .scene.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1) translateY(0);
+        }
+
+        /* อนิเมชันซองจดหมายเปิดฝา */
+        .envelope-flap {
+            transform-origin: top;
+            transition: transform 0.6s ease-in-out;
+        }
+        .envelope-open .envelope-flap {
+            transform: rotateX(180deg);
+        }
+
+        /* กรอบรูปโพลารอยด์ลอยออกจากซองจดหมาย */
+        .polaroid-card {
+            position: absolute;
+            background: #ffffff;
+            padding: 6px 6px 20px 6px;
+            border-radius: 6px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 15px rgba(251, 113, 133, 0.4);
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease, left 1.3s cubic-bezier(0.22, 1, 0.36, 1), top 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, left, top, opacity;
+        }
+        .polaroid-card:hover {
+            z-index: 45 !important;
+            transform: scale(1.18) rotate(0deg) !important;
+            box-shadow: 0 18px 40px rgba(225, 29, 72, 0.55);
+        }
+        @keyframes polaroidSway {
+            0%, 100% { margin-top: 0px; }
+            50% { margin-top: -10px; }
+        }
+        .polaroid-floating {
+            animation: polaroidSway 3.6s ease-in-out infinite;
+        }
+
+        /* ปุ่มสไตล์น่ารักมีมิติ */
+        .btn-love {
+            background: linear-gradient(135deg, #fb7185 0%, #e11d48 100%);
+            box-shadow: 0 8px 20px rgba(225, 29, 72, 0.35), inset 0 2px 3px rgba(255,255,255,0.4);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-love:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 25px rgba(225, 29, 72, 0.45);
+        }
+        .btn-love:active {
+            transform: translateY(1px) scale(0.97);
+        }
+
+        /* Custom Scrollbar สำหรับ Modal */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff1f2;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #fda4af;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body id="main-body" class="bg-romantic-night text-white h-screen w-screen relative overflow-hidden">
+
+    <!-- Canvas สำหรับเอฟเฟกต์ดาวระยิบระยับ หัวใจลอย และพลุหัวใจ -->
+    <canvas id="effects-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+    <!-- ชั้นแสดงรูปคู่โพลารอยด์ลอยฟุ้ง (Floating Polaroid Memories Layer) -->
+    <div id="polaroid-stage" class="fixed inset-0 pointer-events-none z-5 overflow-hidden transition-opacity duration-700"></div>
+
+    <!-- แถบควบคุมมุมขวาบน: ปุ่มเปิด/ปิดเสียงเพลง และปุ่มปรับแต่งการ์ด -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-2">
+        <!-- ปุ่มปรับแต่งการ์ด (Edit) -->
+        <button id="btn-open-edit" onclick="openEditModal()" title="ปรับแต่งข้อความและรูปคู่"
+            class="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-xs sm:text-sm font-medium transition-all shadow-lg active:scale-95">
+            <i class="fa-solid fa-wand-magic-sparkles text-amber-300"></i>
+            <span id="edit-btn-text">ปรับแต่งการ์ด</span>
+        </button>
+
+        <!-- ปุ่มควบคุมเสียงเพลง Web Audio API -->
+        <button id="btn-toggle-audio" onclick="toggleAudio()" title="เปิด/ปิดเสียงเพลง"
+            class="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 flex items-center justify-center transition-all shadow-lg active:scale-95">
+            <i id="audio-icon" class="fa-solid fa-volume-xmark text-rose-200"></i>
+        </button>
+    </div>
+
+    <!-- =========================================================
+         ฉากที่ 1: หน้าเปิด (Intro - ท้องฟ้ายามค่ำคืน & ซองจดหมายหัวใจ)
+         ========================================================= -->
+    <section id="scene-1" class="scene active">
+        <div class="max-w-md w-full text-center flex flex-col items-center">
+            <!-- ข้อความทักทายด้านบน -->
+            <div class="mb-6 animate-float">
+                <span class="inline-block px-4 py-1.5 rounded-full bg-rose-500/20 border border-rose-400/30 text-rose-200 text-xs sm:text-sm tracking-wide mb-3">
+                    ✨ มีบางอย่างอยากบอก...
+                </span>
+                <h1 class="text-2xl sm:text-3xl font-bold text-white drop-shadow-md">
+                    ถึง... <span id="intro-partner-name" class="text-rose-300 underline decoration-wavy decoration-rose-400/60">คนพิเศษของเค้า</span>
+                </h1>
+            </div>
+
+            <!-- ซองจดหมายสุดคิวท์พร้อมหัวใจเต้นตึกตัก -->
+            <div id="envelope-wrapper" onclick="startStory()" class="cursor-pointer group relative my-4 select-none">
+                <!-- แสงฟุ้งด้านหลังซอง -->
+                <div class="absolute -inset-4 bg-rose-500/30 rounded-full blur-2xl group-hover:bg-rose-400/40 transition-all duration-500"></div>
+                
+                <!-- ตัวซองจดหมาย SVG -->
+                <div class="relative w-64 h-44 sm:w-72 sm:h-48 bg-gradient-to-b from-rose-100 to-rose-200 rounded-2xl shadow-2xl border-2 border-white flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-105">
+                    <!-- ลายเส้นฝาซอง -->
+                    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 300 200" preserveAspectRatio="none">
+                        <!-- ด้านล่างซอง -->
+                        <polygon points="0,200 150,95 300,200" fill="#fecdd3" />
+                        <!-- ด้านซ้ายและขวา -->
+                        <polygon points="0,0 125,100 0,200" fill="#ffe4e6" opacity="0.8" />
+                        <polygon points="300,0 175,100 300,200" fill="#ffe4e6" opacity="0.8" />
+                        <!-- ฝาปิดด้านบน -->
+                        <polygon class="envelope-flap" points="0,0 150,115 300,0" fill="#fda4af" />
+                    </svg>
+
+                    <!-- ปุ่มหัวใจตรงกลางซอง -->
+                    <div class="relative z-10 w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-tr from-rose-600 to-pink-500 rounded-full flex items-center justify-center shadow-lg border-4 border-white animate-heartbeat">
+                        <i class="fa-solid fa-heart text-white text-2xl sm:text-3xl drop-shadow"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ปุ่มกดเปิดข้อความ -->
+            <button onclick="startStory()" class="mt-8 btn-love text-white font-semibold px-7 py-3.5 rounded-full text-base sm:text-lg flex items-center gap-2.5">
+                <span>แตะหัวใจเพื่อเปิดจดหมายรัก</span>
+                <span class="text-xl">💌</span>
+            </button>
+
+            <!-- ปุ่มลัดดู/จัดการรูปคู่ทั้ง 14 รูป -->
+            <button onclick="openEditModal(true)" class="mt-3 px-4 py-2 rounded-full bg-white/15 hover:bg-white/25 border border-white/25 text-rose-100 text-xs sm:text-sm font-medium flex items-center gap-2 transition-all active:scale-95">
+                <span>📸 ความทรงจำของเราข้างในซอง</span>
+                <span id="intro-photo-count" class="bg-rose-500/80 text-white text-[11px] px-2 py-0.5 rounded-full">14 รูป</span>
+            </button>
+            <p class="mt-2.5 text-xs text-rose-200/70">(เปิดเสียงเพื่อเพิ่มความโรแมนติกนะ 🎵)</p>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         ฉากที่ 2: ฉากเดินเรื่อง (Animated Love Story - Typewriter)
+         ========================================================= -->
+    <section id="scene-2" class="scene">
+        <div class="glass-card-dark max-w-lg w-full rounded-3xl p-7 sm:p-10 text-center relative overflow-hidden z-20">
+            <!-- ไอคอนตกแต่งด้านบนการ์ด -->
+            <div class="w-16 h-16 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-rose-400/30 to-purple-500/30 border border-white/20 flex items-center justify-center text-3xl animate-float">
+                <span id="story-emoji">🌙</span>
+            </div>
+
+            <!-- ตัวบอกลำดับหน้า (Step Dots) -->
+            <div id="story-dots" class="flex justify-center gap-2 mb-6">
+                <!-- จะถูกสร้างด้วย JS -->
+            </div>
+
+            <!-- พื้นที่แสดงข้อความพิมพ์ดีด -->
+            <div class="min-h-[130px] sm:min-h-[140px] flex items-center justify-center px-2">
+                <p id="typewriter-text" class="text-xl sm:text-2xl leading-relaxed font-medium text-rose-50 tracking-wide typing-cursor"></p>
+            </div>
+
+            <!-- ปุ่มกดไปต่อ -->
+            <div class="mt-8 flex justify-center">
+                <button id="btn-story-next" onclick="nextStoryStep()"
+                    class="opacity-0 pointer-events-none transform translate-y-2 transition-all duration-500 bg-white text-rose-600 hover:bg-rose-50 font-semibold px-6 py-3 rounded-full shadow-lg flex items-center gap-2 text-sm sm:text-base active:scale-95">
+                    <span id="story-btn-label">ไปต่อเลย</span>
+                    <i class="fa-solid fa-arrow-right text-rose-500"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         ฉากที่ 3: ไฮไลต์แกล้งๆ น่ารัก (Playful Question)
+         ========================================================= -->
+    <section id="scene-3" class="scene">
+        <div class="glass-card-light max-w-md w-full rounded-3xl p-7 sm:p-9 text-center text-slate-800 relative z-20">
+            <!-- สติ๊กเกอร์หัวใจ/น้องหมีดุ๊กดิ๊ก -->
+            <div id="playful-emoji" class="text-6xl sm:text-7xl mb-4 animate-bounce select-none">
+                🥺👉👈
+            </div>
+
+            <h2 id="playful-title" class="text-2xl sm:text-3xl font-bold text-rose-600 mb-2">
+                ถามอะไรหน่อยสิ...
+            </h2>
+            <p id="playful-subtitle" class="text-base sm:text-lg text-slate-600 mb-8 font-medium">
+                สรุปแล้ว... <span class="text-rose-500 font-bold">รักเค้าไหม?</span> ❤️
+            </p>
+
+            <!-- ข้อความแซวเวลาพยายามกดปุ่ม "ไม่รัก" -->
+            <div class="h-7 mb-3 flex items-center justify-center">
+                <span id="tease-message" class="text-sm font-semibold text-rose-500 bg-rose-100 px-3 py-1 rounded-full opacity-0 transition-opacity duration-300">
+                    แหน่ะ! กดไม่โดนหรอก 😜
+                </span>
+            </div>
+
+            <!-- พื้นที่ปุ่มเลือกตอบ -->
+            <div class="flex flex-wrap items-center justify-center gap-4 min-h-[70px] relative">
+                <!-- ปุ่ม รักที่สุด -->
+                <button id="btn-yes" onclick="acceptLove()"
+                    class="btn-love text-white font-bold px-8 py-4 rounded-full text-lg sm:text-xl flex items-center gap-2 z-20">
+                    <span>รักที่สุด</span>
+                    <span>❤️</span>
+                </button>
+
+                <!-- ปุ่ม ไม่รัก (วิ่งหนีและเล็กลงเรื่อยๆ) -->
+                <button id="btn-no"
+                    onmouseover="dodgeNoButton()"
+                    ontouchstart="dodgeNoButton(event)"
+                    onclick="dodgeNoButton(event)"
+                    class="bg-slate-200 hover:bg-slate-300 text-slate-600 font-semibold px-6 py-3.5 rounded-full text-base transition-all duration-200 shadow-md z-30">
+                    ไม่รัก 😜
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         ฉากที่ 4: หน้าจบสุดประทับใจ (Grand Finale Love Card)
+         ========================================================= -->
+    <section id="scene-4" class="scene">
+        <div class="glass-card-light max-w-lg w-full rounded-3xl p-6 sm:p-8 text-center text-slate-800 relative overflow-y-auto max-h-[88vh] shadow-2xl border-2 border-white z-20">
+            <!-- แถบตกแต่งด้านบน -->
+            <div class="flex justify-center items-center gap-2 text-rose-500 text-sm font-bold tracking-wider uppercase mb-3">
+                <i class="fa-solid fa-heart animate-ping text-xs"></i>
+                <span>I Love You Always</span>
+                <i class="fa-solid fa-heart animate-ping text-xs"></i>
+            </div>
+
+            <!-- สไลด์โชว์รูปคู่หลัก + แถบรูปภาพความทรงจำทั้งหมด -->
+            <div class="mb-5">
+                <div class="relative w-40 h-40 sm:w-48 sm:h-48 mx-auto mb-3 group">
+                    <div class="absolute -inset-1.5 bg-gradient-to-tr from-rose-500 via-pink-400 to-amber-300 rounded-2xl animate-pulse"></div>
+                    <div class="relative w-full h-full rounded-2xl overflow-hidden border-4 border-white bg-rose-50 shadow-md flex items-center justify-center">
+                        <img id="finale-photo"
+                            src="1.png"
+                            onerror="this.onerror=null; this.src='https://placehold.co/400x400/ffe4e6/e11d48?text=Our+Love+%E2%9D%A4%EF%B8%8F';"
+                            alt="รูปคู่ของเรา"
+                            class="w-full h-full object-cover object-[center_20%] transition-opacity duration-500">
+                        <!-- ปุ่มเลื่อนรูปซ้าย/ขวา -->
+                        <button onclick="prevFinaleSlide()" class="absolute left-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 hover:bg-black/60 text-white text-xs flex items-center justify-center transition-opacity">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <button onclick="nextFinaleSlide()" class="absolute right-1.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-black/40 hover:bg-black/60 text-white text-xs flex items-center justify-center transition-opacity">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <!-- ปุ่มลัดเพิ่ม/เปลี่ยนรูปตรงมุมรูป -->
+                    <button onclick="openEditModal(true)" title="เพิ่ม/จัดการรูปคู่"
+                        class="absolute -bottom-2 -right-2 w-9 h-9 rounded-full bg-rose-500 hover:bg-rose-600 text-white shadow-md border-2 border-white flex items-center justify-center text-xs transition-transform hover:scale-110">
+                        <i class="fa-solid fa-camera"></i>
+                    </button>
+                </div>
+
+                <!-- คอลลาจรูปขนาดย่อทั้งหมด (Thumbnails) -->
+                <div id="finale-gallery-thumbs" class="flex items-center justify-center gap-2 flex-wrap max-w-xs mx-auto">
+                    <!-- เติมรูปย่อด้วย JS -->
+                </div>
+            </div>
+
+            <!-- ชื่อแฟน / หัวข้อการ์ด -->
+            <h1 class="text-2xl sm:text-3xl font-bold text-rose-600 mb-3 font-itim">
+                รัก <span id="finale-partner-name">เธอ</span> ที่สุดในโลกเลย! 💖
+            </h1>
+
+            <!-- กล่องข้อความความในใจ -->
+            <div class="bg-rose-50/90 border border-rose-200/80 rounded-2xl p-4 sm:p-5 mb-5 text-slate-700 text-sm sm:text-base leading-relaxed shadow-inner">
+                <p id="finale-message" class="whitespace-pre-line">
+                    ขอบคุณที่เข้ามาเป็นรอยยิ้มและความสุขในทุกๆ วันของเค้านะ ไม่ว่าวันข้างหน้าจะเป็นยังไง เค้าจะคอยอยู่ข้างๆ จับมือเธอไว้แบบนี้ตลอดไปเลย รักนะครับ 💕
+                </p>
+                <div class="mt-3 pt-2 border-t border-rose-200/60 text-right font-semibold text-rose-500 text-sm">
+                    — จาก <span id="finale-sender-name">คนที่รักเธอที่สุด</span> 💌
+                </div>
+            </div>
+
+            <!-- ปุ่มลูกเล่นท้ายการ์ด: ยิงพลุหัวใจเพิ่ม / เล่นซ้ำ -->
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <button onclick="triggerHeartExplosion()"
+                    class="btn-love text-white font-semibold px-5 py-2.5 rounded-full text-sm flex items-center gap-2">
+                    <i class="fa-solid fa-heart"></i>
+                    <span>ส่งหัวใจรัวๆ</span>
+                </button>
+
+                <button onclick="restartStory()"
+                    class="bg-white hover:bg-rose-50 text-rose-600 border border-rose-200 font-semibold px-5 py-2.5 rounded-full text-sm flex items-center gap-2 shadow-sm transition-all active:scale-95">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    <span>ดูอีกรอบ</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         Modal: หน้าต่างปรับแต่งการ์ด (Edit Card)
+         ========================================================= -->
+    <div id="edit-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="bg-white text-slate-800 w-full max-w-md rounded-3xl p-6 shadow-2xl border border-rose-100 max-h-[90vh] overflow-y-auto animate-float" style="animation: none;">
+            <div class="flex items-center justify-between border-b border-rose-100 pb-3 mb-4">
+                <h3 class="text-lg font-bold text-rose-600 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <span>ปรับแต่งการ์ดบอกรัก</span>
+                </h3>
+                <button onclick="closeEditModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-rose-100 text-slate-500 hover:text-rose-600 flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4 text-sm">
+                <!-- ชื่อแฟน -->
+                <div>
+                    <label for="input-partner-name" class="block font-semibold text-slate-700 mb-1">ชื่อเรียกแฟน / คนพิเศษ</label>
+                    <input id="input-partner-name" type="text" placeholder="เช่น น้องแก้ม, ที่รัก, คนเก่งของเค้า"
+                        class="w-full px-3.5 py-2.5 rounded-xl border border-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-400 bg-rose-50/40 text-slate-800">
+                </div>
+
+                <!-- ชื่อคุณ -->
+                <div>
+                    <label for="input-sender-name" class="block font-semibold text-slate-700 mb-1">ชื่อของคุณ (ผู้ส่ง)</label>
+                    <input id="input-sender-name" type="text" placeholder="เช่น เค้าเอง, แฟนสุดหล่อ, คนที่รักเธอ"
+                        class="w-full px-3.5 py-2.5 rounded-xl border border-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-400 bg-rose-50/40 text-slate-800">
+                </div>
+
+                <!-- ข้อความในใจตอนจบ -->
+                <div>
+                    <label for="input-finale-message" class="block font-semibold text-slate-700 mb-1">ข้อความความในใจในการ์ดตอนจบ</label>
+                    <textarea id="input-finale-message" rows="3" placeholder="เขียนความรู้สึกดีๆ ที่อยากบอก..."
+                        class="w-full px-3.5 py-2.5 rounded-xl border border-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-400 bg-rose-50/40 text-slate-800 resize-none"></textarea>
+                </div>
+
+                <!-- อัปโหลดรูปคู่หลายรูป -->
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <label class="font-semibold text-slate-700">รูปคู่ความทรงจำ (<span id="modal-photo-count">14</span> รูป)</label>
+                        <button type="button" onclick="resetDefaultPhotos()" class="text-xs text-rose-500 hover:underline">
+                            คืนค่ารูปคู่ทั้ง 14 รูป
+                        </button>
+                    </div>
+                    <label id="photo-upload-dropzone" class="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl border-2 border-dashed border-rose-300 bg-rose-50/60 hover:bg-rose-100/70 text-rose-600 font-medium cursor-pointer transition-colors">
+                        <i class="fa-solid fa-images text-lg"></i>
+                        <span>เลือกรูปคู่หลายรูปพร้อมกัน (เพิ่มได้เรื่อยๆ)</span>
+                        <input id="input-photo-file" type="file" multiple accept="image/*" class="hidden" onchange="handleMultiplePhotoUpload(event)">
+                    </label>
+                    <p class="text-xs text-slate-400 mt-1">* รูปทั้งหมดจะลอยออกมาจากซองจดหมายตอนกดเปิดการ์ด</p>
+
+                    <!-- ตารางแสดงพรีวิวรูปที่เลือกทั้งหมด พร้อมปุ่มลบรูป -->
+                    <div id="modal-photo-grid" class="grid grid-cols-4 gap-2 mt-3 max-h-40 overflow-y-auto p-1">
+                        <!-- สร้างพรีวิวด้วย JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- ปุ่มบันทึกและแชร์ลิงก์ -->
+            <div class="mt-6 flex flex-col gap-2.5">
+                <button onclick="saveCardEdits()" class="w-full btn-love text-white font-bold py-3 rounded-xl shadow-md">
+                    บันทึกการเปลี่ยนแปลง ✨
+                </button>
+                <button onclick="copyShareableLink()" class="w-full bg-rose-100 hover:bg-rose-200 text-rose-700 font-semibold py-2.5 rounded-xl text-xs sm:text-sm flex items-center justify-center gap-2 transition-colors">
+                    <i class="fa-solid fa-link"></i>
+                    <span>คัดลอกลิงก์พร้อมชื่อ & ข้อความส่งให้แฟน</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal ขยายดูรูปโพลารอยด์ใบใหญ่ (Lightbox) -->
+    <div id="photo-lightbox" onclick="closeLightbox()" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md cursor-pointer">
+        <div onclick="event.stopPropagation()" class="bg-white p-3 pb-6 rounded-xl shadow-2xl max-w-sm w-full text-center text-slate-800 transform transition-all scale-100">
+            <div class="relative rounded-lg overflow-hidden bg-rose-50 aspect-[3/4] max-h-[65vh] mx-auto mb-3">
+                <img id="lightbox-img" src="" alt="ความทรงจำของเรา" class="w-full h-full object-cover object-[center_20%]">
+            </div>
+            <p id="lightbox-caption" class="font-itim text-lg text-rose-600 font-semibold">ความทรงจำของเรา 💕</p>
+            <button onclick="closeLightbox()" class="mt-3 px-5 py-1.5 rounded-full bg-rose-100 hover:bg-rose-200 text-rose-600 text-xs font-semibold">
+                ปิดรูปภาพ
+            </button>
+        </div>
+    </div>
+
+    <!-- กล่องแจ้งเตือน Toast Message (แทน alert) -->
+    <div id="toast-box" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-slate-800/90 text-white px-5 py-2.5 rounded-full text-sm font-medium shadow-xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2">
+        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toast-text">บันทึกเรียบร้อย!</span>
+    </div>
+
+    <!-- =========================================================
+         JavaScript Logic: Web Audio, Canvas Particles & Storytelling
+         ========================================================= -->
+    <script>
+        // ==========================================
+        // 1. ข้อมูลเริ่มต้นของเรื่องราว (Story & Card Data)
+        // ==========================================
+        const defaultCouplePhotos = [
+            { url: '1.png', caption: 'ความทรงจำของเรา ✨' },
+            { url: '3.png', caption: 'ทุกวันที่มีเธอ 💕' },
+            { url: '4.png', caption: 'อยู่ด้วยกันไปนานๆ นะ ❤️' },
+            { url: '5.png', caption: 'ชุดคู่สุดน่ารัก 🥰' },
+            { url: '6.png', caption: 'กอดแน่นๆ เลยนะ 🤗' },
+            { url: '7.png', caption: 'โลกทั้งใบของเค้า 🌸' },
+            { url: '8.png', caption: 'คู่หูตัวแสบ 💖' },
+            { url: '9.png', caption: 'ไปไหนไปกันเสมอ ✌️' },
+            { url: '10.png', caption: 'น่ารักที่สุดในโลก 🐻' },
+            { url: '11.png', caption: 'ขี่คอเที่ยวด้วยกัน 🎢' },
+            { url: '12.png', caption: 'ช่วงเวลาแสนพิเศษ 💫' },
+            { url: '13.png', caption: 'รอยยิ้มที่ชอบที่สุด 😊' },
+            { url: '14.png', caption: 'รักนะคนเก่ง 🥰' },
+            { url: '15.png', caption: 'รักเธอทุกวันเลย 💌' }
+        ];
+
+        const appState = {
+            partnerName: 'คนพิเศษของเค้า',
+            senderName: 'คนที่รักเธอที่สุด',
+            finaleMessage: 'ขอบคุณที่เข้ามาเป็นรอยยิ้มและความสุขในทุกๆ วันของเค้านะ ไม่ว่าวันข้างหน้าจะเป็นยังไง เค้าจะคอยอยู่ข้างๆ จับมือเธอไว้แบบนี้ตลอดไปเลย รักนะครับ/นะคะ 💕',
+            photos: [...defaultCouplePhotos],
+            finaleSlideIndex: 0,
+            currentScene: 1,
+            storyIndex: 0,
+            noDodgeCount: 0,
+            polaroidsReleased: false
+        };
+
+        // ลำดับข้อความในฉากที่ 2 (Typewriter Storytelling)
+        function getStorySteps() {
+            return [
+                {
+                    emoji: '💌',
+                    text: `รู้ไหม... ว่าทำไมเค้าถึงอยากส่งข้อความนี้มาให้เธอ?`,
+                    btnLabel: 'ทำไมเหรอ? 🤔'
+                },
+                {
+                    emoji: '🌸',
+                    text: `ก็เพราะเค้าอยากบอกรัก "${appState.partnerName}" ให้ได้รู้ว่าเธอสำคัญกับเค้าแค่ไหน...`,
+                    btnLabel: 'งื้อออ อ่านต่อ 💕'
+                },
+                {
+                    emoji: '💫',
+                    text: `รอยยิ้มของเธอ เสียงหัวเราะของเธอ คือความสบายใจเดียวที่เค้าอยากรักษาไว้ตลอดไป`,
+                    btnLabel: 'มีอีกไหมนะ? 🥰'
+                },
+                {
+                    emoji: '❤️',
+                    text: `ก่อนจะเปิดการ์ดใบสุดท้าย เค้ามีคำถามสำคัญอยากถามเธอก่อน...`,
+                    btnLabel: 'พร้อมตอบแล้ว! 👉'
+                }
+            ];
+        }
+
+        // ข้อความแซวเวลาปุ่ม "ไม่รัก" วิ่งหนี
+        const teaseMessages = [
+            'แหน่ะ! กดไม่โดนหรอก 😜',
+            'แน่ใจเหรอว่าจะกดปุ่มนี้? 🥺',
+            'ปุ่มนี้เสียแล้ว กดปุ่มสีชมพูดีกว่า! 💕',
+            'ว้ายยย จับไม่ได้หรอก แบร่! 😝',
+            'ยอมแพ้เถอะ กด "รักที่สุด" เร็วๆ ❤️',
+            'ปุ่มเล็กจิ๋วแล้วนะ ยังจะตามอีกเหรอ 😂'
+        ];
+
+        // ==========================================
+        // 2. ระบบเสียงดนตรีและเอฟเฟกต์ (Web Audio API)
+        // ==========================================
+        let audioCtx = null;
+        let isMusicPlaying = false;
+        let musicInterval = null;
+
+        // เมโลดี้กล่องดนตรีโรแมนติก (โน้ตความถี่ Hz)
+        // ทำนองอบอุ่นสไตล์ Music Box (C Major / F Major)
+        const melodyNotes = [
+            { freq: 523.25, dur: 0.45 }, // C5
+            { freq: 659.25, dur: 0.45 }, // E5
+            { freq: 783.99, dur: 0.45 }, // G5
+            { freq: 987.77, dur: 0.70 }, // B5
+            { freq: 880.00, dur: 0.45 }, // A5
+            { freq: 783.99, dur: 0.45 }, // G5
+            { freq: 659.25, dur: 0.80 }, // E5
+            { freq: 587.33, dur: 0.45 }, // D5
+            { freq: 698.46, dur: 0.45 }, // F5
+            { freq: 880.00, dur: 0.45 }, // A5
+            { freq: 783.99, dur: 0.70 }, // G5
+            { freq: 659.25, dur: 0.45 }, // E5
+            { freq: 587.33, dur: 0.45 }, // D5
+            { freq: 523.25, dur: 0.90 }  // C5
+        ];
+        let noteStep = 0;
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // เล่นเสียงโน้ตกล่องดนตรี 1 ตัว
+        function playMusicBoxNote(freq, duration = 0.5) {
+            if (!audioCtx || !isMusicPlaying) return;
+            try {
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine'; // เสียงใสเหมือนกล่องดนตรี
+                osc.frequency.setValueAtTime(freq, now);
+
+                // เสียงประสานเบาๆ (Harmonic)
+                const subOsc = audioCtx.createOscillator();
+                const subGain = audioCtx.createGain();
+                subOsc.type = 'triangle';
+                subOsc.frequency.setValueAtTime(freq * 2, now);
+                subGain.gain.setValueAtTime(0.015, now);
+                subGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.linearRampToValueAtTime(0.08, now + 0.03);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + duration + 0.4);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                subOsc.connect(subGain);
+                subGain.connect(audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + duration + 0.45);
+                subOsc.start(now);
+                subOsc.stop(now + duration + 0.45);
+            } catch (e) {
+                // ป้องกันข้อผิดพลาดหากเบราว์เซอร์บล็อกเสียง
+            }
+        }
+
+        // เสียงคลิก / เสียงวิ้งน่ารักๆ เวลาโต้ตอบ
+        function playCuteClickSound(pitch = 880) {
+            initAudioContext();
+            try {
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(pitch, now);
+                osc.frequency.exponentialRampToValueAtTime(pitch * 1.4, now + 0.12);
+
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.16);
+            } catch (e) {}
+        }
+
+        // เสียงพลุหัวใจระเบิดตอนกด "รักที่สุด"
+        function playCelebrationChord() {
+            initAudioContext();
+            const chord = [523.25, 659.25, 783.99, 1046.50]; // C Major Chord
+            chord.forEach((freq, idx) => {
+                setTimeout(() => {
+                    try {
+                        const now = audioCtx.currentTime;
+                        const osc = audioCtx.createOscillator();
+                        const gain = audioCtx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, now);
+                        gain.gain.setValueAtTime(0.09, now);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.8);
+                        osc.connect(gain);
+                        gain.connect(audioCtx.destination);
+                        osc.start(now);
+                        osc.stop(now + 0.85);
+                    } catch (e) {}
+                }, idx * 70);
+            });
+        }
+
+        function startBackgroundMusic() {
+            initAudioContext();
+            if (isMusicPlaying) return;
+            isMusicPlaying = true;
+            updateAudioIcon();
+
+            musicInterval = setInterval(() => {
+                if (!isMusicPlaying) return;
+                const currentNote = melodyNotes[noteStep];
+                playMusicBoxNote(currentNote.freq, currentNote.dur);
+                noteStep = (noteStep + 1) % melodyNotes.length;
+            }, 620);
+        }
+
+        function stopBackgroundMusic() {
+            isMusicPlaying = false;
+            clearInterval(musicInterval);
+            updateAudioIcon();
+        }
+
+        function toggleAudio() {
+            if (isMusicPlaying) {
+                stopBackgroundMusic();
+            } else {
+                startBackgroundMusic();
+                playCuteClickSound(780);
+            }
+        }
+
+        function updateAudioIcon() {
+            const icon = document.getElementById('audio-icon');
+            if (isMusicPlaying) {
+                icon.className = 'fa-solid fa-volume-high text-rose-300 animate-pulse';
+            } else {
+                icon.className = 'fa-solid fa-volume-xmark text-rose-200/70';
+            }
+        }
+
+        // ==========================================
+        // 3. ระบบ Canvas Animation (ดาวระยิบระยับ, หัวใจลอย, พลุหัวใจ)
+        // ==========================================
+        const canvas = document.getElementById('effects-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let stars = [];
+        let floatingHearts = [];
+        let burstParticles = [];
+        let themeMode = 'night'; // 'night' หรือ 'pastel'
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const starCount = Math.floor((width * height) / 9000);
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 1.8 + 0.5,
+                    alpha: Math.random(),
+                    speed: Math.random() * 0.02 + 0.005
+                });
+            }
+        }
+
+        // วาดรูปหัวใจบน Canvas
+        function drawHeartShape(x, y, size, color, alpha = 1, rotation = 0) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(rotation);
+            ctx.globalAlpha = Math.max(0, Math.min(1, alpha));
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            const topCurveHeight = size * 0.3;
+            ctx.moveTo(0, topCurveHeight);
+            ctx.bezierCurveTo(0, 0, -size / 2, 0, -size / 2, topCurveHeight);
+            ctx.bezierCurveTo(-size / 2, (size + topCurveHeight) / 2, 0, (size + topCurveHeight) / 1.3, 0, size);
+            ctx.bezierCurveTo(0, (size + topCurveHeight) / 1.3, size / 2, (size + topCurveHeight) / 2, size / 2, topCurveHeight);
+            ctx.bezierCurveTo(size / 2, 0, 0, 0, 0, topCurveHeight);
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // สร้างหัวใจลอยฟุ้งจากด้านล่าง
+        function spawnFloatingHeart() {
+            const colors = themeMode === 'night'
+                ? ['#fb7185', '#f43f5e', '#f472b6', '#fda4af']
+                : ['#e11d48', '#fb7185', '#ec4899', '#f43f5e', '#fbbf24'];
+
+            floatingHearts.push({
+                x: Math.random() * width,
+                y: height + 20,
+                size: Math.random() * 14 + 10,
+                speedY: Math.random() * 1.3 + 0.7,
+                wobbleSpeed: Math.random() * 0.04 + 0.01,
+                wobbleOffset: Math.random() * Math.PI * 2,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                alpha: Math.random() * 0.5 + 0.35
+            });
+        }
+
+        // ระเบิดพลุหัวใจ (Confetti / Heart Particles)
+        function triggerHeartExplosion(originX = width / 2, originY = height / 2) {
+            playCelebrationChord();
+            const colors = ['#e11d48', '#fb7185', '#f472b6', '#f59e0b', '#ec4899', '#ffffff'];
+            for (let i = 0; i < 65; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 9 + 3;
+                burstParticles.push({
+                    x: originX,
+                    y: originY,
+                    vx: Math.cos(angle) * velocity,
+                    vy: Math.sin(angle) * velocity - 3,
+                    gravity: 0.18,
+                    size: Math.random() * 14 + 8,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: 1,
+                    decay: Math.random() * 0.015 + 0.008,
+                    rotation: Math.random() * Math.PI * 2,
+                    vRot: (Math.random() - 0.5) * 0.15
+                });
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+
+            // วาดดวงดาวระยิบระยับ (เฉพาะโหมดกลางคืน)
+            if (themeMode === 'night') {
+                stars.forEach(star => {
+                    star.alpha += star.speed;
+                    if (star.alpha > 1 || star.alpha < 0.15) star.speed *= -1;
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 245, 250, ${star.alpha})`;
+                    ctx.fill();
+                    ctx.restore();
+                });
+            }
+
+            // สุ่มปล่อยหัวใจลอยขึ้นเรื่อยๆ
+            if (Math.random() < (themeMode === 'pastel' ? 0.12 : 0.05)) {
+                spawnFloatingHeart();
+            }
+
+            // อัปเดตและวาดหัวใจลอย
+            for (let i = floatingHearts.length - 1; i >= 0; i--) {
+                const h = floatingHearts[i];
+                h.y -= h.speedY;
+                h.wobbleOffset += h.wobbleSpeed;
+                const currentX = h.x + Math.sin(h.wobbleOffset) * 18;
+                drawHeartShape(currentX, h.y, h.size, h.color, h.alpha);
+
+                if (h.y < -30) {
+                    floatingHearts.splice(i, 1);
+                }
+            }
+
+            // อัปเดตและวาดพลุหัวใจ
+            for (let i = burstParticles.length - 1; i >= 0; i--) {
+                const p = burstParticles[i];
+                p.vx *= 0.98;
+                p.vy += p.gravity;
+                p.x += p.vx;
+                p.y += p.vy;
+                p.rotation += p.vRot;
+                p.alpha -= p.decay;
+
+                drawHeartShape(p.x, p.y, p.size, p.color, p.alpha, p.rotation);
+
+                if (p.alpha <= 0) {
+                    burstParticles.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animateCanvas);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        // ==========================================
+        // 4. การควบคุมลำดับฉาก (Storytelling Flow)
+        // ==========================================
+        function switchScene(sceneNumber) {
+            document.querySelectorAll('.scene').forEach(el => el.classList.remove('active'));
+            const target = document.getElementById(`scene-${sceneNumber}`);
+            if (target) {
+                target.classList.add('active');
+                appState.currentScene = sceneNumber;
+            }
+
+            // ปรับความโปร่งใสของรูปโพลารอยด์ที่ลอยอยู่ตามแต่ละฉาก
+            const polaroidStage = document.getElementById('polaroid-stage');
+            if (sceneNumber === 1) {
+                polaroidStage.style.opacity = '1';
+            } else if (sceneNumber === 2 || sceneNumber === 3) {
+                // ลอยคลอเป็นฉากหลังจางๆ สวยๆ ระหว่างอ่านข้อความ
+                polaroidStage.style.opacity = '0.45';
+            } else if (sceneNumber === 4) {
+                polaroidStage.style.opacity = '0.35';
+            }
+
+            // เปลี่ยนธีมพื้นหลังตามฉาก (ฉาก 1-2 กลางคืนโรแมนติก, ฉาก 3-4 พาสเทลอบอุ่น)
+            const body = document.getElementById('main-body');
+            const editBtn = document.getElementById('btn-open-edit');
+            const audioBtn = document.getElementById('btn-toggle-audio');
+
+            if (sceneNumber >= 3) {
+                themeMode = 'pastel';
+                body.classList.remove('bg-romantic-night', 'text-white');
+                body.classList.add('bg-romantic-pastel', 'text-slate-800');
+                editBtn.className = 'flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/80 hover:bg-white text-rose-600 border border-rose-200 text-xs sm:text-sm font-semibold transition-all shadow-md active:scale-95';
+                audioBtn.className = 'w-10 h-10 rounded-full bg-white/80 hover:bg-white text-rose-600 border border-rose-200 flex items-center justify-center transition-all shadow-md active:scale-95';
+            } else {
+                themeMode = 'night';
+                body.classList.remove('bg-romantic-pastel', 'text-slate-800');
+                body.classList.add('bg-romantic-night', 'text-white');
+                editBtn.className = 'flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white text-xs sm:text-sm font-medium transition-all shadow-lg active:scale-95';
+                audioBtn.className = 'w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white flex items-center justify-center transition-all shadow-lg active:scale-95';
+            }
+        }
+
+        // เริ่มต้นเปิดซองจดหมายจากฉาก 1 -> ฉาก 2
+        function startStory() {
+            startBackgroundMusic();
+            playCuteClickSound(980);
+
+            const envelope = document.getElementById('envelope-wrapper');
+            envelope.classList.add('envelope-open');
+
+            // ปล่อยหัวใจพุ่งออกมาจากซองจดหมาย
+            const rect = envelope.getBoundingClientRect();
+            triggerHeartExplosion(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+            setTimeout(() => {
+                appState.storyIndex = 0;
+                switchScene(2);
+                renderStoryStep();
+            }, 650);
+        }
+
+        // ระบบพิมพ์ดีดทีละตัวอักษร (Typewriter Effect)
+        let typewriterTimer = null;
+
+        function renderStoryStep() {
+            const steps = getStorySteps();
+            const current = steps[appState.storyIndex];
+
+            // อัปเดตจุดบอกลำดับหน้า
+            const dotsContainer = document.getElementById('story-dots');
+            dotsContainer.innerHTML = steps.map((_, idx) => `
+                <span class="h-2 rounded-full transition-all duration-300 ${idx === appState.storyIndex ? 'w-7 bg-rose-400' : 'w-2 bg-white/30'}"></span>
+            `).join('');
+
+            // อัปเดตอีโมจิและปุ่ม
+            document.getElementById('story-emoji').textContent = current.emoji;
+            document.getElementById('story-btn-label').textContent = current.btnLabel;
+
+            const nextBtn = document.getElementById('btn-story-next');
+            nextBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+
+            const textEl = document.getElementById('typewriter-text');
+            textEl.textContent = '';
+            textEl.classList.add('typing-cursor');
+
+            clearInterval(typewriterTimer);
+            let charIdx = 0;
+            const fullText = current.text;
+
+            typewriterTimer = setInterval(() => {
+                if (charIdx < fullText.length) {
+                    textEl.textContent += fullText.charAt(charIdx);
+                    charIdx++;
+                } else {
+                    clearInterval(typewriterTimer);
+                    textEl.classList.remove('typing-cursor');
+                    // แสดงปุ่มไปต่อเมื่อพิมพ์จบ
+                    nextBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+                }
+            }, 48);
+        }
+
+        function nextStoryStep() {
+            playCuteClickSound(850 + appState.storyIndex * 80);
+            const steps = getStorySteps();
+
+            if (appState.storyIndex < steps.length - 1) {
+                appState.storyIndex++;
+                renderStoryStep();
+            } else {
+                // ไปยังฉากถามคำถามแกล้งๆ (ฉาก 3)
+                resetPlayfulScene();
+                switchScene(3);
+            }
+        }
+
+        // ==========================================
+        // 4.5 อนิเมชันรูปคู่โพลารอยด์ลอยออกจากซองจดหมาย
+        // ==========================================
+        function releasePolaroidsFromEnvelope(originX, originY) {
+            const stage = document.getElementById('polaroid-stage');
+            stage.innerHTML = '';
+            appState.polaroidsReleased = true;
+
+            const photos = appState.photos.length > 0 ? appState.photos : defaultCouplePhotos;
+            const total = photos.length;
+            const isMobile = window.innerWidth < 640;
+            const cardWidth = isMobile ? 76 : 108;
+
+            // ตำแหน่งกระจายตัวรอบๆ ท้องฟ้าและขอบจอครบทั้ง 14 ใบ ไม่บังกล่องข้อความตรงกลาง
+            const presetPositions = [
+                { x: 10, y: 14, rot: -12 },
+                { x: 88, y: 15, rot: 14 },
+                { x: 9,  y: 78, rot: 10 },
+                { x: 89, y: 76, rot: -14 },
+                { x: 24, y: 10, rot: 8 },
+                { x: 74, y: 11, rot: -9 },
+                { x: 22, y: 86, rot: -8 },
+                { x: 76, y: 85, rot: 11 },
+                { x: 7,  y: 36, rot: -15 },
+                { x: 91, y: 37, rot: 13 },
+                { x: 8,  y: 57, rot: 9 },
+                { x: 90, y: 56, rot: -11 },
+                { x: 39, y: 9,  rot: -6 },
+                { x: 60, y: 88, rot: 7 }
+            ];
+
+            photos.forEach((photo, idx) => {
+                const card = document.createElement('div');
+                card.className = 'polaroid-card';
+                card.style.width = `${cardWidth}px`;
+                // เริ่มต้นซ่อนอยู่ตรงกลางซองจดหมาย
+                card.style.left = `${originX - cardWidth / 2}px`;
+                card.style.top = `${originY - cardWidth / 2}px`;
+                card.style.opacity = '0';
+                card.style.transform = 'scale(0.15) rotate(0deg)';
+                card.style.zIndex = `${12 + (idx % 6)}`;
+
+                card.innerHTML = `
+                    <div class="w-full aspect-square overflow-hidden rounded-sm bg-rose-100">
+                        <img src="${photo.url}"
+                             onerror="this.onerror=null; this.src='https://placehold.co/300x300/ffe4e6/e11d48?text=Love';"
+                             alt="รูปคู่" class="w-full h-full object-cover object-[center_20%] pointer-events-none">
+                    </div>
+                    <p class="text-[9px] sm:text-xs text-rose-500 font-itim text-center mt-1 truncate px-0.5">
+                        ${photo.caption || 'ความทรงจำ 💕'}
+                    </p>
+                `;
+
+                // คลิกที่รูปโพลารอยด์เพื่อขยายดูรูปใหญ่ได้
+                card.onclick = (e) => {
+                    e.stopPropagation();
+                    openLightbox(photo.url, photo.caption || 'ความทรงจำของเรา 💕');
+                };
+
+                stage.appendChild(card);
+
+                // คำนวณปลายทางบนท้องฟ้า/ขอบจอ
+                let targetLeftPercent, targetTopPercent, targetRot;
+                if (idx < presetPositions.length) {
+                    targetLeftPercent = presetPositions[idx].x;
+                    targetTopPercent = presetPositions[idx].y;
+                    targetRot = presetPositions[idx].rot;
+                } else {
+                    const angle = (idx / total) * Math.PI * 2;
+                    targetLeftPercent = 50 + Math.cos(angle) * 40;
+                    targetTopPercent = 50 + Math.sin(angle) * 38;
+                    targetRot = (Math.random() * 28) - 14;
+                }
+
+                // หน่วงเวลาทีละใบให้พุ่งออกมาจากซองจดหมายต่อเนื่องกันอย่างนุ่มนวล
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.left = `calc(${targetLeftPercent}vw - ${cardWidth / 2}px)`;
+                    card.style.top = `calc(${targetTopPercent}vh - ${cardWidth / 2}px)`;
+                    card.style.transform = `scale(1) rotate(${targetRot}deg)`;
+
+                    // เพิ่มแอนิเมชันลอยละล่องเบาๆ หลังจากลอยเข้าตำแหน่งแล้ว
+                    setTimeout(() => {
+                        card.classList.add('polaroid-floating');
+                        card.style.animationDelay = `${(idx % 5) * 0.5}s`;
+                    }, 1250);
+                }, idx * 110);
+            });
+        }
+
+        function openLightbox(url, caption) {
+            playCuteClickSound(920);
+            document.getElementById('lightbox-img').src = url;
+            document.getElementById('lightbox-caption').textContent = caption;
+            const lb = document.getElementById('photo-lightbox');
+            lb.classList.remove('hidden');
+            lb.classList.add('flex');
+        }
+
+        function closeLightbox() {
+            const lb = document.getElementById('photo-lightbox');
+            lb.classList.add('hidden');
+            lb.classList.remove('flex');
+        }
+
+        // เริ่มต้นเปิดซองจดหมายจากฉาก 1 -> ฉาก 2
+        function startStory() {
+            startBackgroundMusic();
+            playCuteClickSound(980);
+
+            const envelope = document.getElementById('envelope-wrapper');
+            envelope.classList.add('envelope-open');
+
+            // ปล่อยหัวใจและรูปคู่โพลารอยด์ทั้งหมดพุ่งออกมาจากซองจดหมาย
+            const rect = envelope.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            triggerHeartExplosion(centerX, centerY);
+            releasePolaroidsFromEnvelope(centerX, centerY);
+
+            // ให้เวลาชื่นชมรูปคู่ทั้ง 14 ใบที่ลอยออกมาจากซองก่อนเลื่อนเข้าสู่ข้อความเรื่องราว
+            setTimeout(() => {
+                appState.storyIndex = 0;
+                switchScene(2);
+                renderStoryStep();
+            }, 2200);
+        }
+
+        // ระบบพิมพ์ดีดทีละตัวอักษร (Typewriter Effect)
+        // เมื่อกดปุ่ม "รักที่สุด" -> เข้าสู่ฉากจบ (Grand Finale)
+        function acceptLove() {
+            appState.finaleSlideIndex = 0;
+            renderFinaleGallery();
+            switchScene(4);
+            // ยิงพลุหัวใจหลายระลอก
+            triggerHeartExplosion(width * 0.5, height * 0.45);
+            setTimeout(() => triggerHeartExplosion(width * 0.25, height * 0.35), 350);
+            setTimeout(() => triggerHeartExplosion(width * 0.75, height * 0.35), 650);
+        }
+
+        function restartStory() {
+            playCuteClickSound(760);
+            const envelope = document.getElementById('envelope-wrapper');
+            envelope.classList.remove('envelope-open');
+            document.getElementById('polaroid-stage').innerHTML = '';
+            appState.polaroidsReleased = false;
+            switchScene(1);
+        }
+
+        // ==========================================
+        // 5. แกลเลอรีสไลด์โชว์และปุ่มแกล้งๆ ในฉากที่ 3-4
+        // ==========================================
+        function resetPlayfulScene() {
+            appState.noDodgeCount = 0;
+            const noBtn = document.getElementById('btn-no');
+            const yesBtn = document.getElementById('btn-yes');
+            const teaseMsg = document.getElementById('tease-message');
+            if (noBtn) {
+                noBtn.style.transform = 'translate(0px, 0px) scale(1)';
+                noBtn.style.opacity = '1';
+            }
+            if (yesBtn) {
+                yesBtn.style.transform = 'scale(1)';
+            }
+            if (teaseMsg) {
+                teaseMsg.classList.add('opacity-0');
+            }
+        }
+
+        function dodgeNoButton(e) {
+            if (e) e.preventDefault();
+            playCuteClickSound(520);
+            appState.noDodgeCount++;
+
+            const noBtn = document.getElementById('btn-no');
+            const yesBtn = document.getElementById('btn-yes');
+            const teaseMsg = document.getElementById('tease-message');
+
+            const maxX = window.innerWidth < 500 ? 95 : 150;
+            const maxY = window.innerWidth < 500 ? 75 : 110;
+            const randX = (Math.random() * 2 - 1) * maxX;
+            const randY = (Math.random() * 2 - 1) * maxY;
+            const shrinkScale = Math.max(0.45, 1 - appState.noDodgeCount * 0.08);
+            const growScale = Math.min(1.45, 1 + appState.noDodgeCount * 0.07);
+
+            noBtn.style.transform = `translate(${randX}px, ${randY}px) scale(${shrinkScale})`;
+            yesBtn.style.transform = `scale(${growScale})`;
+
+            teaseMsg.textContent = teaseMessages[(appState.noDodgeCount - 1) % teaseMessages.length];
+            teaseMsg.classList.remove('opacity-0');
+        }
+
+        function acceptLove() {
+            appState.finaleSlideIndex = 0;
+            renderFinaleGallery();
+            switchScene(4);
+            // ยิงพลุหัวใจหลายระลอก
+            triggerHeartExplosion(width * 0.5, height * 0.45);
+            setTimeout(() => triggerHeartExplosion(width * 0.25, height * 0.35), 350);
+            setTimeout(() => triggerHeartExplosion(width * 0.75, height * 0.35), 650);
+        }
+
+        function restartStory() {
+            playCuteClickSound(760);
+            const envelope = document.getElementById('envelope-wrapper');
+            envelope.classList.remove('envelope-open');
+            document.getElementById('polaroid-stage').innerHTML = '';
+            appState.polaroidsReleased = false;
+            switchScene(1);
+        }
+
+        let finaleAutoSlideTimer = null;
+
+        function renderFinaleGallery() {
+            const photos = appState.photos.length > 0 ? appState.photos : defaultCouplePhotos;
+            if (appState.finaleSlideIndex >= photos.length) appState.finaleSlideIndex = 0;
+
+            const mainImg = document.getElementById('finale-photo');
+            mainImg.src = photos[appState.finaleSlideIndex].url;
+
+            const thumbsContainer = document.getElementById('finale-gallery-thumbs');
+            thumbsContainer.innerHTML = photos.map((p, idx) => `
+                <button type="button" onclick="selectFinaleSlide(${idx})"
+                    class="w-9 h-9 rounded-lg overflow-hidden border-2 transition-all ${idx === appState.finaleSlideIndex ? 'border-rose-500 scale-110 shadow-md' : 'border-white/80 opacity-65 hover:opacity-100'}">
+                    <img src="${p.url}" alt="รูปย่อ" class="w-full h-full object-cover object-[center_20%]">
+                </button>
+            `).join('');
+
+            clearInterval(finaleAutoSlideTimer);
+            if (photos.length > 1) {
+                finaleAutoSlideTimer = setInterval(() => {
+                    if (appState.currentScene === 4) {
+                        nextFinaleSlide(true);
+                    }
+                }, 3200);
+            }
+        }
+
+        function selectFinaleSlide(index) {
+            playCuteClickSound(840);
+            appState.finaleSlideIndex = index;
+            renderFinaleGallery();
+        }
+
+        function nextFinaleSlide(isAuto = false) {
+            if (!isAuto) playCuteClickSound(840);
+            const photos = appState.photos.length > 0 ? appState.photos : defaultCouplePhotos;
+            appState.finaleSlideIndex = (appState.finaleSlideIndex + 1) % photos.length;
+            renderFinaleGallery();
+        }
+
+        function prevFinaleSlide() {
+            playCuteClickSound(800);
+            const photos = appState.photos.length > 0 ? appState.photos : defaultCouplePhotos;
+            appState.finaleSlideIndex = (appState.finaleSlideIndex - 1 + photos.length) % photos.length;
+            renderFinaleGallery();
+        }
+
+        // ==========================================
+        // 6. ระบบปรับแต่งการ์ด (Edit Modal & Multiple Photos)
+        // ==========================================
+        let isUsingDefaultSamplePhotos = true;
+
+        function openEditModal(focusUpload = false) {
+            playCuteClickSound(880);
+            document.getElementById('input-partner-name').value = appState.partnerName;
+            document.getElementById('input-sender-name').value = appState.senderName;
+            document.getElementById('input-finale-message').value = appState.finaleMessage;
+            renderModalPhotoGrid();
+
+            const modal = document.getElementById('edit-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            if (focusUpload) {
+                const dropzone = document.getElementById('photo-upload-dropzone');
+                dropzone.classList.add('ring-4', 'ring-rose-300');
+                setTimeout(() => dropzone.classList.remove('ring-4', 'ring-rose-300'), 1400);
+            }
+        }
+
+        function closeEditModal() {
+            const modal = document.getElementById('edit-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function renderModalPhotoGrid() {
+            const grid = document.getElementById('modal-photo-grid');
+            document.getElementById('modal-photo-count').textContent = appState.photos.length;
+            document.getElementById('intro-photo-count').textContent = `${appState.photos.length} รูป`;
+
+            grid.innerHTML = appState.photos.map((photo, idx) => `
+                <div class="relative group aspect-square rounded-xl overflow-hidden border border-rose-200 bg-rose-50">
+                    <img src="${photo.url}" alt="พรีวิวรูปคู่" class="w-full h-full object-cover object-[center_20%]">
+                    <button type="button" onclick="removePhotoAt(${idx})" title="ลบรูปนี้"
+                        class="absolute top-1 right-1 w-5 h-5 rounded-full bg-rose-600 text-white text-[10px] flex items-center justify-center shadow hover:bg-rose-700">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function handleMultiplePhotoUpload(event) {
+            const files = Array.from(event.target.files || []);
+            if (files.length === 0) return;
+
+            // หากยังเป็นชุดรูปตัวอย่างเริ่มต้น ให้แทนที่ด้วยรูปคู่จริงของผู้ใช้ทันที
+            if (isUsingDefaultSamplePhotos) {
+                appState.photos = [];
+                isUsingDefaultSamplePhotos = false;
+            }
+
+            const captions = ['ความทรงจำของเรา 💕', 'รักเธอที่สุด ❤️', 'ช่วงเวลาดีๆ ✨', 'อยู่ด้วยกันนานๆ นะ 🥰', 'รอยยิ้มของเธอ 😊', 'คู่กันตลอดไป 💖'];
+            let loadedCount = 0;
+
+            files.forEach((file, idx) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    appState.photos.push({
+                        url: e.target.result,
+                        caption: captions[(appState.photos.length + idx) % captions.length]
+                    });
+                    loadedCount++;
+
+                    if (loadedCount === files.length) {
+                        renderModalPhotoGrid();
+                        renderFinaleGallery();
+                        if (appState.polaroidsReleased) {
+                            releasePolaroidsFromEnvelope(window.innerWidth / 2, window.innerHeight / 2);
+                        }
+                        showToast(`เพิ่มรูปคู่แล้ว ${files.length} รูป! 📸`);
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+
+            event.target.value = '';
+        }
+
+        function removePhotoAt(index) {
+            if (appState.photos.length <= 1) {
+                showToast('ต้องมีรูปภาพอย่างน้อย 1 รูปนะ 💕');
+                return;
+            }
+            appState.photos.splice(index, 1);
+            renderModalPhotoGrid();
+            renderFinaleGallery();
+            if (appState.polaroidsReleased) {
+                releasePolaroidsFromEnvelope(window.innerWidth / 2, window.innerHeight / 2);
+            }
+        }
+
+        function resetDefaultPhotos() {
+            appState.photos = [...defaultCouplePhotos];
+            isUsingDefaultSamplePhotos = true;
+            renderModalPhotoGrid();
+            renderFinaleGallery();
+            showToast('คืนค่ารูปภาพตัวอย่างเรียบร้อย ✨');
+        }
+
+        function applyCardDataToUI() {
+            document.getElementById('intro-partner-name').textContent = appState.partnerName;
+            document.getElementById('finale-partner-name').textContent = appState.partnerName;
+            document.getElementById('finale-sender-name').textContent = appState.senderName;
+            document.getElementById('finale-message').textContent = appState.finaleMessage;
+            document.getElementById('intro-photo-count').textContent = `${appState.photos.length} รูป`;
+            renderFinaleGallery();
+        }
+
+        function saveCardEdits() {
+            const newPartner = document.getElementById('input-partner-name').value.trim();
+            const newSender = document.getElementById('input-sender-name').value.trim();
+            const newMsg = document.getElementById('input-finale-message').value.trim();
+
+            if (newPartner) appState.partnerName = newPartner;
+            if (newSender) appState.senderName = newSender;
+            if (newMsg) appState.finaleMessage = newMsg;
+
+            applyCardDataToUI();
+            if (appState.currentScene === 2) {
+                renderStoryStep();
+            }
+
+            closeEditModal();
+            showToast('บันทึกการ์ดเรียบร้อยแล้ว 💖');
+        }
+
+        // คัดลอกลิงก์พร้อมพารามิเตอร์ชื่อและข้อความเพื่อส่งให้แฟน
+        function copyShareableLink() {
+            saveCardEdits();
+            try {
+                const url = new URL(window.location.href);
+                url.searchParams.set('to', appState.partnerName);
+                url.searchParams.set('from', appState.senderName);
+                url.searchParams.set('msg', appState.finaleMessage);
+
+                const tempInput = document.createElement('input');
+                tempInput.value = url.toString();
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+
+                showToast('คัดลอกลิงก์ส่งให้แฟนเรียบร้อย! 💌');
+            } catch (err) {
+                showToast('บันทึกข้อมูลบนหน้านี้เรียบร้อยแล้ว 💕');
+            }
+        }
+
+        // โหลดค่าจาก URL Parameters หากผู้ส่งแนบชื่อ/ข้อความมาในลิงก์
+        function loadParamsFromURL() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                if (params.get('to')) appState.partnerName = params.get('to');
+                if (params.get('from')) appState.senderName = params.get('from');
+                if (params.get('msg')) appState.finaleMessage = params.get('msg');
+            } catch (e) {}
+            applyCardDataToUI();
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-box');
+            document.getElementById('toast-text').textContent = message;
+            toast.classList.remove('opacity-0');
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+            }, 2600);
+        }
+
+        // เริ่มต้นทำงานเมื่อโหลดหน้าเว็บเสร็จสมบูรณ์
+        window.onload = function() {
+            loadParamsFromURL();
+            resizeCanvas();
+            animateCanvas();
+        };
+    </script>
+</body>
+</html>
